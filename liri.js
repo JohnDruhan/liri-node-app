@@ -19,6 +19,8 @@ var fs = require("fs");
 
 var searchTerm = "";
 
+// Function to run on screen commands asking user to choose
+
 function prompt() {
     inquirer
         .prompt([
@@ -78,6 +80,8 @@ function search(command) {
         });
 }
 
+// Function that runs Movie Search
+
 function getMovie(movie) {
     console.log(movie)
     if (movie === "") {
@@ -92,15 +96,19 @@ function getMovie(movie) {
 
             console.log("Title: " + JSON.parse(body).Title);
             console.log("Release Year: " + JSON.parse(body).Year);
+            console.log("Rated: " + JSON.parse(body).Rated);
             console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
             console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
             console.log("Country: " + JSON.parse(body).Country);
             console.log("Language: " + JSON.parse(body).Language);
             console.log("Plot: " + JSON.parse(body).Plot);
             console.log("Actors: " + JSON.parse(body).Actors);
+            console.log("-----------------------------------");
         }
     })
 }
+
+// Function that runs Music Search using Spotify api
 
 function getSong(song) {
     var spotify = new Spotify(keys.spotify);
@@ -114,12 +122,16 @@ function getSong(song) {
         console.log("Song Name: " + data.tracks.items[0].name);
         console.log("Preview Link: " + data.tracks.items[0].preview_url);
         console.log("Album: " + data.tracks.items[0].album.name);
+        console.log("-----------------------------------");
 
         if (err) {
             return console.log('Error occurred: ' + err);
         }
     });
 }
+
+
+// Function gets concert info from "Bands in Town" and returns Venue name, location and date
 
 function getConcert(artist) {
     console.log(artist)
@@ -132,11 +144,14 @@ function getConcert(artist) {
         console.log("Venue Name: " + JSON.parse(body)[0].venue.name);
         console.log("Venue Location: " + JSON.parse(body)[0].venue.city);
         console.log("Event Date: " + moment(JSON.parse(body)[0]).format("MM/DD/YYYY"));
+        console.log("-----------------------------------");
         if (!error && response.statusCode === 200) {
             //console.log(body)
         }
     })
 }
+
+// 'Do what it says' function logs text found on "random.txt" page
 
 function doWhatItSays() {
     fs.readFile("random.txt", "utf8", function (error, data) {
